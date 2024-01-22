@@ -1,6 +1,5 @@
-import type { Repository, RepositoryClones, RepositoryViews, User } from '@prisma/client'
-import type { NextApiRequest, NextApiResponse } from 'next'
-import { DevBundler } from 'next/dist/server/lib/router-utils/setup-dev-bundler'
+import type { User } from '@prisma/client'
+import { NextResponse } from 'next/server'
 import { db } from '~/server/db'
 
 type DetailedStat = {
@@ -28,10 +27,7 @@ type Response = {
   error: string;
 }
 
-export async function GET(
-  req: NextApiRequest,
-  res: NextApiResponse<Response>
-) {
+export async function GET(_request: Request) {
 
   try {
     const response: Response = {
@@ -112,9 +108,9 @@ export async function GET(
       response.total++;
     }
 
-    return res.status(200).json(response);
+    return NextResponse.json({ message: response }, { status: 200 });
   }
   catch (error) {
-    return res.status(500).json({ error: JSON.stringify(error) });
+    return NextResponse.json({ message: error }, { status: 500 });
   }
 }
