@@ -35,15 +35,6 @@ export async function GET(_request: Request) {
       total: 0
     };
 
-    await db.repository.update({
-      where: {
-        id: 1,
-      },
-      data: {
-        name: 'wingstako-neocities',
-      }
-    })
-
     const repositories = await db.repository.findMany({
       include: {
         user: {
@@ -55,6 +46,8 @@ export async function GET(_request: Request) {
         repositoryViews: true,
       }
     });
+
+    if (repositories.length === 0) return NextResponse.json({ message: 'No repositories found' }, { status: 200 });
 
     for (const repository of repositories) {
 
