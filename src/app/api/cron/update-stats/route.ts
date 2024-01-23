@@ -75,7 +75,8 @@ export async function GET(_request: Request) {
             uniques: view.uniques,
             repositoryId: repository.id,
           }
-        })
+        }),
+        skipDuplicates: true
       });
 
       // fetch clones
@@ -94,7 +95,8 @@ export async function GET(_request: Request) {
             uniques: clone.uniques,
             repositoryId: repository.id,
           }
-        })
+        }),
+        skipDuplicates: true
       });
 
       response.updatedRepositories.push({ owner, repo });
