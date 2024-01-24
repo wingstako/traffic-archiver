@@ -80,12 +80,12 @@ export default async function ReposPage() {
 
   const session = await getServerAuthSession();
 
-  if (session?.user === null) {
-    return redirect('/');
+  if (session === null) {
+    return redirect('/401');
   }
 
   const repos = await getRepos();
-  const records = await getRecords(session!.user?.id);
+  const records = await getRecords(session.user?.id);
 
   return (
     <main className="">
@@ -99,7 +99,7 @@ export default async function ReposPage() {
             </tr>
           </thead>
           <tbody>
-            <RepoTable repos={repos} userId={session!.user?.id} records={records}></RepoTable>
+            <RepoTable repos={repos} userId={session.user?.id} records={records}></RepoTable>
           </tbody>
         </table>
       </div>

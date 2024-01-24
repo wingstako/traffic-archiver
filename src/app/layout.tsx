@@ -1,8 +1,5 @@
 
-import { Session } from "next-auth";
 import NavbarUser from "~/components/navbar-user";
-import SignInButton from "~/components/sign-in";
-import { getServerAuthSession } from "~/server/auth";
 import "~/styles/globals.css";
 
 export const metadata = {
@@ -17,21 +14,22 @@ export default async function RootLayout({
   children: React.ReactNode;
 }) {
 
-  const session: Session | null = await getServerAuthSession();
-
   return (
     <html lang="en">
       <body>
         <header className="navbar bg-base-100">
-          <div className="flex-1">
-            <a className="btn btn-ghost text-xl">Traffic Archiver</a>
+          <div className="navbar-start">
+            <a href="/" className="btn btn-ghost text-xl">Traffic Archiver</a>
           </div>
-          <div className="flex-none">
-              <NavbarUser></NavbarUser>
+          <div className="navbar-center">
+          </div>
+          <div className="navbar-end">
+            <a href="/repos" className="btn btn-ghost content-center">Repositories</a>
+            <NavbarUser></NavbarUser>
           </div>
         </header>
-        <div className="flex">
-          <main className="flex-grow">
+        <div className="py-4 px-4 mx-auto max-w-screen-xl lg:px-6">
+          <main className="max-w-screen-lg text-gray-500 sm:text-lg dark:text-gray-400">
             {children}
           </main>
         </div>

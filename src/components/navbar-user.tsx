@@ -1,5 +1,4 @@
 import { getServerAuthSession } from "~/server/auth";
-import { signOut } from "next-auth/react";
 import SignOutButton from "./sign-out";
 import SignInButton from "./sign-in";
 
@@ -9,30 +8,22 @@ const NavbarUser = async () => {
 
   return (
     <>
-      <ul className="menu menu-horizontal px-1">
-        {!session && (
-          <li>
+
+      <div className="dropdown">
+        <div tabIndex={0} role="button" className="btn btn-secondary">
+          {!session && (
             <SignInButton />
-          </li>
-        )
-        }
-        {
-          session && (
+          )}
+          {session?.user.name}
+        </div>
+        {session &&
+          <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-200 rounded-box">
             <li>
-              <details>
-                <summary>
-                  {session?.user.name}
-                </summary>
-                <ul className="p-2 bg-base-100 rounded-t-none">
-                  <li>
-                    <SignOutButton />
-                  </li>
-                </ul>
-              </details>
+              <SignOutButton />
             </li>
-          )
+          </ul>
         }
-      </ul>
+      </div>
     </>
   );
 };
