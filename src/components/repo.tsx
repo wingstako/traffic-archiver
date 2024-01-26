@@ -14,7 +14,7 @@ type UnlistenedRepository = {
 type ResponseRepository = Repository | UnlistenedRepository;
 
 async function listenRepo(repo: ResponseRepository, userId: string) {
-  return await fetch(`http://localhost:3000/api/users/${userId}/repositories`, {
+  return await fetch(`/api/users/${userId}/repositories`, {
     method: "POST",
     body: JSON.stringify({
       repo: repo,

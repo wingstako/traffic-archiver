@@ -25,7 +25,7 @@ import { db } from "~/server/db";
 // }
 
 async function getRepositories(userId: string) {
-  const response = await fetch(`http://localhost:3000/api/users/${userId}/repositories`, {
+  const response = await fetch(`/api/users/${userId}/repositories`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json"
