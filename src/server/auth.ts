@@ -18,15 +18,35 @@ declare module "next-auth" {
 }
 
 export const authOptions: NextAuthOptions = {
-  session: {
-    strategy: 'jwt'
-  },
   callbacks: {
-    session: ({ session, token }) => ({
+    signIn: async ({ user, account, profile }) => {
+
+      const dbAccount = await db.account.findFirst({
+        where: {
+          providerAccountId: account?.providerAccountId,
+          provider: account?.provider,
+          userId: user?.id,
+        },
+      });
+
+      await db.account.update({
+        where: {
+          id: dbAccount?.id,
+          providerAccountId: account?.providerAccountId,
+          provider: account?.provider,
+          userId: user?.id,
+        },
+        data: {
+          access_token: account?.access_token,
+        }
+      })
+      return Promise.resolve(true);
+    },
+    session: ({ session, user }) => ({
       ...session,
       user: {
         ...session.user,
-        id: token.sub,
+        id: user.id,
       },
     }),
   },
